@@ -12,6 +12,16 @@ class ReformCabochaTest(unittest.TestCase):
     expected["claims"]=1
     self.assertTrue(expected == actual)
 
+  def test_get_num_of_pos(self):
+    input = ["###/###", "When/W", "such/J", "claims/N"]
+    actual = utils.get_num_of_pos_array(input)
+    expected = {}
+    expected["###"]=1
+    expected["W"]=1
+    expected["J"]=1
+    expected["N"]=1
+    self.assertTrue(expected == actual)
+
 
 
 

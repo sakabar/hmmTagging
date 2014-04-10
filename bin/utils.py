@@ -22,4 +22,13 @@ def get_num_of_pos_array(lst):
 
   return ans
 
-   
+def get_num_of_word_and_pos_array(lst):
+  ans = {}
+
+  for wp in lst:
+    if wp in ans:
+      ans[wp] += 1
+    else:
+      ans[wp] = 1
+
+  return ans

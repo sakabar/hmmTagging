@@ -47,11 +47,11 @@ class HmmTaggingTest(unittest.TestCase):
     input = ["###/###", "When/W", "such/J", "claims/N", "noun/N", "claims/N"]
     actual = utils.get_num_of_word_and_pos_array(input)
     expected = {}
-    expected["###/###"]=1
-    expected["When/W"]=1
-    expected["such/J"]=1
-    expected["claims/N"]=2
-    expected["noun/N"]=1
+    expected[("###","###")]=1
+    expected[("When", "W")]=1
+    expected[("such", "J")]=1
+    expected[("claims", "N")]=2
+    expected[("noun", "N")]=1
     self.assertTrue(expected == actual)
 
   def test_viterbi(self):

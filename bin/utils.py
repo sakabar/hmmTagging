@@ -25,11 +25,12 @@ def get_num_of_pos_array(lst):
 def get_num_of_word_and_pos_array(lst):
   ans = {}
 
-  for wp in lst:
-    if wp in ans:
-      ans[wp] += 1
+  for item in lst:
+    (w, p) = item.split("/")
+    if (w,p) in ans:
+      ans[(w,p)] += 1
     else:
-      ans[wp] = 1
+      ans[(w,p)] = 1
 
   return ans
 
@@ -41,7 +42,8 @@ class Tagger:
     self.n_wp = get_num_of_word_and_pos_array(wpList)
 
   def viterbi(self, words):
-    t = {(0,"###"):0.0}
+    p_tbl = {(0,"###"):0.0}
+
     n = len(words)
 
     #   for j in range(1,n+1):

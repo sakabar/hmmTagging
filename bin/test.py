@@ -91,7 +91,7 @@ class HmmTaggingTest(unittest.TestCase):
     tagger = Tagger(train)
 
     actual = tagger.get_pos_to_word_log_p("V", "have")
-    expected = math.log10(2.0/7.0)
+    expected = math.log10((1.0+1.0) / (1.0 + 1.0*(6+1)))
     self.assertEquals(expected, actual)
 
   def test_vocab_num(self):
@@ -99,8 +99,7 @@ class HmmTaggingTest(unittest.TestCase):
     tagger = Tagger(train)
 
     actual = tagger.vocab_num
-    # expected = 6 + 1 #未知語UNKNOWN含む
-    expected = 6
+    expected = 6 + 1 #未知語UNKNOWN含む
     self.assertEquals(expected, actual)
 
   def test_tag_num(self):

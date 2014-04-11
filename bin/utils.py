@@ -85,7 +85,8 @@ class Tagger:
   def __init__(self, wpList):
     self.wpList = wpList
     self.n_w = get_num_of_word_array(wpList)
-    # self.n_w["UNKNOWN"] = 0 #未知語
+    self.n_w["UNKNOWN"] = 0 #未知語
+    
     self.n_p = get_num_of_pos_array(wpList)
     self.n_wp = get_num_of_word_and_pos_array(wpList)
     self.n_pp = get_pos_to_pos(wpList)
@@ -100,7 +101,7 @@ class Tagger:
     else:
       n = self.eps
 
-    d = sum(map(lambda k: self.n_pp[k], filter(lambda pair: pair[1] == pos2 , self.n_pp.keys()))) + self.eps * self.vocab_num
+    d = sum(map(lambda k: self.n_pp[k], filter(lambda pair: pair[1] == pos2 , self.n_pp.keys()))) + self.eps * self.tag_num
 
     ans = float(n) / float(d)
     log_ans = math.log10(ans)
@@ -113,7 +114,7 @@ class Tagger:
     else:
       n = self.eps
 
-    d = self.n_p[pos] + self.eps * self.tag_num
+    d = self.n_p[pos] + self.eps * self.vocab_num
     
     ans = float(n) / float(d)
     log_ans = math.log10(ans)
@@ -135,7 +136,7 @@ class Tagger:
         logp_tbl[(j, pos)] = maximum(map(lambda prev_pos: (logp_tbl[(j-1, prev_pos)][0] + self.get_pos_to_pos_log_p(prev_pos, pos) + self.get_pos_to_word_log_p(pos, words[j]), prev_pos), self.n_p.keys()))
 
     #バックトラック
-    tmp = -1000.0 #magic
+    tmp = -1000000.0 #magic
     last_pos = "###" #magic
     for pos in self.n_p.keys():
       if logp_tbl[(n-1, pos)][0] >= tmp:

@@ -1,6 +1,6 @@
 import unittest
 import utils
-# from utils import Tagger
+from utils import Tagger
 
 class HmmTaggingTest(unittest.TestCase):
   def test_get_num_of_word(self):
@@ -54,16 +54,14 @@ class HmmTaggingTest(unittest.TestCase):
     expected["noun/N"]=1
     self.assertTrue(expected == actual)
 
-  # def test_tagging(self):
-  #   input = ["###/###", "When/W", "such/J", "claims/N"]
-  #   tagger = Tagger(input)
-  #   actual = tagger.get_num_of_word_array
-  #   expected = {}
-  #   expected["###"]=1
-  #   expected["When"]=1
-  #   expected["such"]=1
-  #   expected["claims"]=1
-  #   self.assertTrue(expected == actual)
+  def test_viterbi(self):
+    train = ["###/###", "I/P", "have/V", "a/D", "book/N", "./."]
+    words = ["I", "have", "a", "book", "."]
+    tagger = Tagger(train)
+    
+    actual = tagger.viterbi(words)
+    expected = ["P", "V", "D", "N", "."]
+    self.assertEquals(expected, actual)
 
 
 if __name__ == '__main__':

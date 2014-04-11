@@ -1,4 +1,6 @@
+#coding: utf-8
 import math
+import sys
 
 def get_num_of_word_array(lst):
   ans = {}
@@ -47,6 +49,18 @@ def get_pos_to_pos(wpList):
       ans[(lst[i-1], lst[i])] = 1
 
   return ans
+
+def maximum(prob_pos_pair):
+  ans_prob = - 1000.0 #magic num
+  ans_pos = "###"
+
+  for (prob, pos) in prob_pos_pair:
+    if prob >= ans_prob:
+      ans_prob = prob
+      ans_pos = pos
+
+  return (ans_prob, ans_pos)
+      
   
 class Tagger:
   def __init__(self, wpList):
@@ -86,24 +100,35 @@ class Tagger:
 
     return log_ans
 
-  #fake
-  def viterbi(self, words):
-    p_tbl = {(0,"###"):0.0}
+  def viterbi(self, input_words):
+    words = ["###"] + input_words
+    logp_tbl = {(0,"###") : (0.0, "###")}
 
     n = len(words)
 
-    for j in range(1,n):
-      for pos in self.n_p.keys():
-        p_tbl[(1, pos)] = self.get_pos_to_pos_log_p("###", pos) + self.get_pos_to_word_log_p(pos, words[j])
-    
-      # for j in range(1,n+1):
-      #   for k in range()
+    #前向き
+    for pos in self.n_p.keys():
+      logp_tbl[(1, pos)] = (self.get_pos_to_pos_log_p("###", pos) + self.get_pos_to_word_log_p(pos, words[1]), "###")
 
-    
-    # t[(1,"N")]=>y0*(y0 to "N")*(words[j] from "N")
-    # t[(1,"P")]=>y0*(y0 to "P")*(words[j] from "P")
-    
-    
-    return ["P", "V", "D", "N", "."]
+    for j in range(2,n):
+      for pos in self.n_p.keys():
+        logp_tbl[(j, pos)] = maximum(map(lambda prev_pos: (logp_tbl[(j-1, prev_pos)][0] + self.get_pos_to_pos_log_p(prev_pos, pos) + self.get_pos_to_word_log_p(pos, words[j]), prev_pos), self.n_p.keys()))
+
+    #バックトラック
+    tmp = -1000.0 #magic
+    last_pos = "###" #magic
+    for pos in self.n_p.keys():
+      if logp_tbl[(n-1, pos)][0] >= tmp:
+        last_pos = pos
+        tmp = logp_tbl[(n-1, pos)][0]
+
+    ans = [last_pos]
+    tmp_pos = last_pos
+
+    for j in range(n-1, 1, -1):
+      tmp_pos = logp_tbl[(j, tmp_pos)][1]
+      ans = [tmp_pos] + ans
+
+    return ans
 
     

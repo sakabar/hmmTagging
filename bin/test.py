@@ -54,6 +54,19 @@ class HmmTaggingTest(unittest.TestCase):
     expected[("noun", "N")]=1
     self.assertTrue(expected == actual)
 
+  def test_p_p(self):
+    lst = ["###/###", "I/P", "have/V", "a/D", "book/N", "./."]
+    
+    actual = utils.get_pos_to_pos(lst)
+
+    expected = {}
+    expected[("###","P")]=1
+    expected[("P", "V")]=1
+    expected[("V", "D")]=1
+    expected[("D", "N")]=1
+    expected[("N", ".")]=1
+    self.assertEquals(expected, actual)
+
   def test_viterbi(self):
     train = ["###/###", "I/P", "have/V", "a/D", "book/N", "./."]
     words = ["I", "have", "a", "book", "."]
@@ -63,6 +76,13 @@ class HmmTaggingTest(unittest.TestCase):
     expected = ["P", "V", "D", "N", "."]
     self.assertEquals(expected, actual)
 
+  def test_get_pos_to_pos_prob(self):
+    train = ["###/###", "I/P", "have/V", "a/D", "book/N", "./."]
+    tagger = Tagger(train)
+
+    actual = tagger.get_pos_to_pos_log_p("###", "P")
+    expected = 0
+    self.assertEquals(expected, actual)
 
 if __name__ == '__main__':
   unittest.main()

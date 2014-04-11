@@ -92,7 +92,13 @@ class HmmTaggingTest(unittest.TestCase):
     expected = 0
     self.assertEquals(expected, actual)
 
+  def test_vocab(self):
+    train = ["###/###", "I/P", "have/V", "a/D", "book/N", "./.", "I/P"]
+    tagger = Tagger(train)
 
-    
+    actual = tagger.vocab
+    expected = 6
+    self.assertEquals(expected, actual)
+
 if __name__ == '__main__':
   unittest.main()

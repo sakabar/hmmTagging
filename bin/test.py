@@ -1,4 +1,5 @@
 import unittest
+import math
 import utils
 from utils import Tagger
 
@@ -81,7 +82,7 @@ class HmmTaggingTest(unittest.TestCase):
     tagger = Tagger(train)
 
     actual = tagger.get_pos_to_pos_log_p("###", "P")
-    expected = 0
+    expected = math.log10(2.0/7.0)
     self.assertEquals(expected, actual)
 
   def test_get_pos_to_word_log_p(self):
@@ -89,7 +90,7 @@ class HmmTaggingTest(unittest.TestCase):
     tagger = Tagger(train)
 
     actual = tagger.get_pos_to_word_log_p("V", "have")
-    expected = 0
+    expected = math.log10(2.0/7.0)
     self.assertEquals(expected, actual)
 
   def test_vocab_num(self):

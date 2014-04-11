@@ -57,11 +57,16 @@ class Tagger:
     self.n_pp = get_pos_to_pos(wpList)
     self.vocab_num = len(self.n_w.keys())
     self.tag_num = len(self.n_p.keys())
+    self.eps = 1.0
 
     
   def get_pos_to_pos_log_p(self, pos1, pos2):
-    n = self.n_pp[(pos1, pos2)]
-    d = sum(map(lambda k: self.n_pp[k], filter(lambda pair: pair[1] == pos2 , self.n_pp.keys())))
+    if (pos1, pos2) in self.n_pp:
+      n = self.n_pp[(pos1, pos2)] + self.eps
+    else:
+      n = self.eps
+
+    d = sum(map(lambda k: self.n_pp[k], filter(lambda pair: pair[1] == pos2 , self.n_pp.keys()))) + self.eps * self.vocab_num
 
     ans = float(n) / float(d)
     log_ans = math.log10(ans)
@@ -69,8 +74,12 @@ class Tagger:
     return log_ans
 
   def get_pos_to_word_log_p(self, pos, word):
-    n = self.n_wp[(word, pos)]
-    d = self.n_p[pos]
+    if (word, pos) in self.n_wp:
+      n = self.n_wp[(word, pos)] + self.eps
+    else:
+      n = self.eps
+
+    d = self.n_p[pos] + self.eps * self.tag_num
     
     ans = float(n) / float(d)
     log_ans = math.log10(ans)
@@ -83,8 +92,9 @@ class Tagger:
 
     n = len(words)
 
-    # for pos in self.n_p.keys():
-    #   p_tbl[(1, pos)] = self.get_pos_to_pos_log_p("###", "N") + self.get_pos_to_word_log_p("N", words[j])
+    for j in range(1,n):
+      for pos in self.n_p.keys():
+        p_tbl[(1, pos)] = self.get_pos_to_pos_log_p("###", pos) + self.get_pos_to_word_log_p(pos, words[j])
     
       # for j in range(1,n+1):
       #   for k in range()

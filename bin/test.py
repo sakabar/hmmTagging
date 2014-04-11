@@ -1,3 +1,4 @@
+#coding: utf-8
 import unittest
 import math
 import utils
@@ -82,7 +83,7 @@ class HmmTaggingTest(unittest.TestCase):
     tagger = Tagger(train)
 
     actual = tagger.get_pos_to_pos_log_p("###", "P")
-    expected = math.log10(2.0/7.0)
+    expected = math.log10((1.0+1.0) / (1.0+1.0*6))
     self.assertEquals(expected, actual)
 
   def test_get_pos_to_word_log_p(self):
@@ -98,6 +99,7 @@ class HmmTaggingTest(unittest.TestCase):
     tagger = Tagger(train)
 
     actual = tagger.vocab_num
+    # expected = 6 + 1 #未知語UNKNOWN含む
     expected = 6
     self.assertEquals(expected, actual)
 
@@ -109,5 +111,10 @@ class HmmTaggingTest(unittest.TestCase):
     expected = 6
     self.assertEquals(expected, actual)
 
+  def test_get_sentence_and_pos(self):
+    actual = utils.get_pair_of_sentence_and_pos(["I/P", "have/V", "a/D", "book/N", "./."])
+    expected = (["I", "have", "a", "book", "."], ["P", "V", "D", "N", "."])
+    self.assertEquals(expected, actual)
+    
 if __name__ == '__main__':
   unittest.main()

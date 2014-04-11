@@ -60,12 +60,32 @@ def maximum(prob_pos_pair):
       ans_pos = pos
 
   return (ans_prob, ans_pos)
-      
+
+def get_pair_of_sentence_and_pos(wpList):
+  ans_s = []
+  ans_p = []
+
+  for wp in wpList:
+    tmp_s , tmp_p = wp.split("/")
+    ans_s += [tmp_s]
+    ans_p += [tmp_p]
+
+  return (ans_s, ans_p)
+
+def zip(lst1, lst2):
+  n = min(len(lst1), len(lst2))
+  ans = []
+  
+  for i in range(0, n):
+    ans += (lst1[i], lst2[i])
+
+  return ans
   
 class Tagger:
   def __init__(self, wpList):
     self.wpList = wpList
     self.n_w = get_num_of_word_array(wpList)
+    # self.n_w["UNKNOWN"] = 0 #未知語
     self.n_p = get_num_of_pos_array(wpList)
     self.n_wp = get_num_of_word_and_pos_array(wpList)
     self.n_pp = get_pos_to_pos(wpList)

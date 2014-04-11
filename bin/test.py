@@ -76,7 +76,7 @@ class HmmTaggingTest(unittest.TestCase):
     expected = ["P", "V", "D", "N", "."]
     self.assertEquals(expected, actual)
 
-  def test_get_pos_to_pos_prob(self):
+  def test_get_pos_to_pos_log_p(self):
     train = ["###/###", "I/P", "have/V", "a/D", "book/N", "./."]
     tagger = Tagger(train)
 
@@ -84,5 +84,15 @@ class HmmTaggingTest(unittest.TestCase):
     expected = 0
     self.assertEquals(expected, actual)
 
+  def test_get_pos_to_word_log_p(self):
+    train = ["###/###", "I/P", "have/V", "a/D", "book/N", "./."]
+    tagger = Tagger(train)
+
+    actual = tagger.get_pos_to_word_log_p("have", "V")
+    expected = 0
+    self.assertEquals(expected, actual)
+
+
+    
 if __name__ == '__main__':
   unittest.main()

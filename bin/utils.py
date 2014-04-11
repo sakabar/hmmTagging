@@ -67,7 +67,7 @@ class Tagger:
 
   #fake
   def get_pos_to_word_log_p(self, pos, word):
-    ans = -1
+    ans = 0
 
     return ans
     

@@ -67,10 +67,14 @@ class Tagger:
 
   #fake
   def get_pos_to_word_log_p(self, pos, word):
-    ans = 0
-
-    return ans
+    n = self.n_wp[(word, pos)]
+    d = self.n_p[pos]
     
+    ans = float(n) / float(d)
+    log_ans = math.log10(ans)
+
+    return log_ans
+
   def viterbi(self, words):
     p_tbl = {(0,"###"):0.0}
 

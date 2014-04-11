@@ -88,7 +88,7 @@ class HmmTaggingTest(unittest.TestCase):
     train = ["###/###", "I/P", "have/V", "a/D", "book/N", "./."]
     tagger = Tagger(train)
 
-    actual = tagger.get_pos_to_word_log_p("have", "V")
+    actual = tagger.get_pos_to_word_log_p("V", "have")
     expected = 0
     self.assertEquals(expected, actual)
 

@@ -55,7 +55,8 @@ class Tagger:
     self.n_p = get_num_of_pos_array(wpList)
     self.n_wp = get_num_of_word_and_pos_array(wpList)
     self.n_pp = get_pos_to_pos(wpList)
-    self.vocab = len(self.n_w.keys())
+    self.vocab_num = len(self.n_w.keys())
+    self.tag_num = len(self.n_p.keys())
 
     
   def get_pos_to_pos_log_p(self, pos1, pos2):

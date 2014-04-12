@@ -35,10 +35,14 @@ def main():
   for td in testData:
     s, p = utils.get_pair_of_sentence_and_pos(td)
     tagged = tagger.viterbi(s)
-    if tagged == p:
-      ok += 1
+    if len(tagged) != len(p):
+      print "error"
     else:
-      ng += 1
+      for i in range(0, len(p)):
+        if tagged[i] == p[i]:
+          ok += 1
+        else:
+          ng += 1
 
     sys.stdout.write(str(ok))
     sys.stdout.write(":")
@@ -48,8 +52,7 @@ def main():
 
   print ""
   print "---finished---"
-  ans = float(ok) / float(len(testData))
-  print ans
+  print float(ok) / float(ok+ng)
   
 def experiment():
   trainingData = map((lambda str: str.rstrip("\n")), sys.stdin.readlines())

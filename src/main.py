@@ -9,11 +9,14 @@ def tag(words):
   return tagger.viterbi(words)
   
 def main():
-  trainingData = map((lambda str: str.rstrip("\n")), sys.stdin.readlines())
+  trainingData = [s.rstrip("\n") for s in open("./data/entrain").readlines()]
   tagger = Tagger(trainingData)
 
-  wordsList = filter(lambda str: str != "", open("./data/entest").read().split("###/###"))
-  testData = map(lambda str: filter(lambda str2: str2 != "", str.split("\n")), wordsList)
+  wordsList = [s for s in open("./data/smltest").read().split("###/###") if (s != "") and (s != "\n")]
+   # testData = map(lambda str: filter(lambda str2: str2 != "", str.split("\n")), wordsList)
+  testData = [[x for x in s.split("\n") if x != ""] for s in wordsList]
+
+  
 
   ok = 0
   ng = 0

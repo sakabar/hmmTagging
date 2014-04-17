@@ -67,8 +67,8 @@ def get_pair_of_sentence_and_pos(wpList):
 
   for wp in wpList:
     tmp_s , tmp_p = wp.split("/")
-    ans_s += [tmp_s]
-    ans_p += [tmp_p]
+    ans_s.append(tmp_s)
+    ans_p.append(tmp_p)
 
   return (ans_s, ans_p)
 
@@ -148,7 +148,8 @@ class Tagger:
 
     for j in range(n-1, 1, -1):
       tmp_pos = logp_tbl[(j, tmp_pos)][1]
-      ans = [tmp_pos] + ans
+      ans.append(tmp_pos)
+    ans.reverse()
 
     return ans
 

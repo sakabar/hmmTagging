@@ -39,7 +39,8 @@ def get_num_of_word_and_pos_array(lst):
   return ans
 
 def get_pos_to_pos(wpList):
-  lst = map((lambda str: str.split("/")[1]), wpList)
+  # lst = map((lambda str: str.split("/")[1]), wpList)
+  lst = [s.split("/")[1] for s in wpList]
   ans = {}
 
   for i in range(1,len(lst)):
@@ -101,7 +102,8 @@ class Tagger:
     else:
       n = self.eps
 
-    d = sum(map(lambda k: self.n_pp[k], filter(lambda pair: pair[1] == pos2 , self.n_pp.keys()))) + self.eps * self.tag_num
+    l = map(lambda k: self.n_pp[k], filter(lambda pair: pair[1] == pos2 , self.n_pp.keys()))
+    d = sum(l) + self.eps * self.tag_num
 
     ans = float(n) / float(d)
     log_ans = math.log10(ans)

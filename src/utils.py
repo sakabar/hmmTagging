@@ -39,7 +39,8 @@ def get_num_of_word_and_pos_array(lst):
   return ans
 
 def get_pos_to_pos(wpList):
-  lst = map((lambda str: str.split("/")[1]), wpList)
+  # lst = map((lambda str: str.split("/")[1]), wpList)
+  lst = [s.split("/")[1] for s in wpList]
   ans = {}
 
   for i in range(1,len(lst)):
@@ -67,8 +68,8 @@ def get_pair_of_sentence_and_pos(wpList):
 
   for wp in wpList:
     tmp_s , tmp_p = wp.split("/")
-    ans_s += [tmp_s]
-    ans_p += [tmp_p]
+    ans_s.append(tmp_s)
+    ans_p.append(tmp_p)
 
   return (ans_s, ans_p)
 
@@ -101,7 +102,8 @@ class Tagger:
     else:
       n = self.eps
 
-    d = sum(map(lambda k: self.n_pp[k], filter(lambda pair: pair[1] == pos2 , self.n_pp.keys()))) + self.eps * self.tag_num
+    l = map(lambda k: self.n_pp[k], filter(lambda pair: pair[1] == pos2 , self.n_pp.keys()))
+    d = sum(l) + self.eps * self.tag_num
 
     ans = float(n) / float(d)
     log_ans = math.log10(ans)
@@ -148,7 +150,8 @@ class Tagger:
 
     for j in range(n-1, 1, -1):
       tmp_pos = logp_tbl[(j, tmp_pos)][1]
-      ans = [tmp_pos] + ans
+      ans.append(tmp_pos)
+    ans.reverse()
 
     return ans
 

@@ -3,10 +3,10 @@ import math
 import utils
 from utils import Tagger
 
-def tag(words):
-  trainingData = map((lambda str: str.rstrip("\n")), sys.stdin.readlines())
-  tagger = Tagger(trainingData)
-  return tagger.viterbi(words)
+# def tag(words):
+#   trainingData = map((lambda str: str.rstrip("\n")), sys.stdin.readlines())
+#   tagger = Tagger(trainingData)
+#   return tagger.viterbi(words)
   
 def main():
   trainingData = [s.rstrip("\n") for s in open("./data/entrain").readlines()]
@@ -17,7 +17,6 @@ def main():
   testData = [[x for x in s.split("\n") if x != ""] for s in wordsList]
 
   
-
   ok = 0
   ng = 0
   for td in testData:

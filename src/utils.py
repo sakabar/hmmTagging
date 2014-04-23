@@ -39,7 +39,6 @@ def get_num_of_word_and_pos_array(lst):
   return ans
 
 def get_pos_to_pos(wpList):
-  # lst = map((lambda str: str.split("/")[1]), wpList)
   lst = [s.split("/")[1] for s in wpList]
   ans = {}
 

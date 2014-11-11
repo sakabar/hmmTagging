@@ -22,6 +22,7 @@ def main():
   for td in testData:
     s, p = utils.get_pair_of_sentence_and_pos(td)
     tagged = tagger.viterbi(s)
+
     if len(tagged) != len(p):
       print "error"
     else:
@@ -30,12 +31,18 @@ def main():
           ok += 1
         else:
           ng += 1
+          print p[i],
+          print "is expected, but output is ",
+          print tagged[i]
 
-    sys.stdout.write(str(ok))
-    sys.stdout.write(":")
-    sys.stdout.write(str(ok+ng))
-    sys.stdout.write(" ")
+    # sys.stdout.write(str(ok))
+    # sys.stdout.write(":")
+    # sys.stdout.write(str(ok+ng))
+    # sys.stdout.write(" ")
     print float(ok) / float(ok+ng)
+    print ""
+    sys.stdout.flush()
+
 
   print ""
   print "---finished---"
